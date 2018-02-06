@@ -34,10 +34,10 @@ class SFCMapper(object):
 
         # Generate Curves
         print("Generating Space-Filling Curves...")
-        self.curve_3d = self.__hilbert_3d(int(np.log2(self.size)))
+        self.curve_3d = self.__hilbert_3d(int(np.log2(self.size_3d)))
         self.curve_2d = self.__hilbert_2d(int(np.log2(self.size_2d)))
 
-    def map_3d_to_2d(array_3d):
+    def map_3d_to_2d(self, array_3d):
         '''
         Method proceses 3D array and encodes into 2D using SFCs.
 
@@ -48,9 +48,9 @@ class SFCMapper(object):
             array_2d - np.array
 
         '''
-        s = int(np.cbrt(len(curve_3d)))
-        array_3d = np.zeros([s,s,s])
-        for i in range(s**3):
+        s = int(np.sqrt(len(self.curve_2d)))
+        array_2d = np.zeros([s,s])
+        for i in range(s**2):
             c2d = self.curve_2d[i]
             c3d = self.curve_3d[i]
             array_2d[c2d[0], c2d[1]] = array_3d[c3d[0], c3d[1], c3d[2]]
