@@ -1,0 +1,4 @@
+2/6/17
+  - Setup project
+  - Added toy data generator
+  - Added space filling curve mapper
