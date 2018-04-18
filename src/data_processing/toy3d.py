@@ -67,12 +67,13 @@ def gen_bkg_tracks(num_event, num_det_layers, det_layer_size,
     return bkg_tracks
 
 def generate_data(shape, num_seed_layers=3, avg_bkg_tracks=3,
-                  noise_prob=0.01, verbose=True):
+                  noise_prob=0.01, verbose=True, seed=1234):
     """
     Top level function to generate a dataset.
 
     Returns arrays (events, sig_tracks, sig_params)
     """
+    np.random.seed(seed)
     num_event, num_det_layers, det_layer_size, _ = shape
     # Signal tracks
     sig_tracks, sig_params = gen_straight_tracks(
