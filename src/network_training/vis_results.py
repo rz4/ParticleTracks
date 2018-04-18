@@ -1,6 +1,9 @@
 '''
 vis_results.py
-Updated: 3/16/17
+Updated: 4/16/17
+
+This script is used to visualize particle track segmentation using a trained
+model. 3D plots are generated using Matplotlib.
 
 '''
 import sys; sys.path.insert(0, '../')
@@ -18,20 +21,22 @@ shape = (100,20,20,20)
 num_seed_layers = 4
 avg_bkg_tracks = 10
 noise_prob = 0.01
-seed = 1234
-event_nb = 1
+seed = 4321
+event_nb = 12
 
 # Network Parameters
 epochs = 10
 batch_size = 10
 model = unet_model_3d((1,20,20,20))
-model_folder = '../../models/u_net_3d/'
-threshold = 0.05
+model_folder = '../../models/u_net_3d_v2/'
+threshold = 0.5
 
 ################################################################################
 
 def intersect(i, j):
     '''
+    Method finds common points between two sets of coordinates.
+
     '''
     aset = set([tuple(x) for x in i])
     bset = set([tuple(x) for x in j])
@@ -39,6 +44,8 @@ def intersect(i, j):
 
 def remove_intersect(i, intersect):
     '''
+    Method removes instances shared between i and intersect from i.
+
     '''
     ii = []
     for j in i:
@@ -66,6 +73,7 @@ if __name__ == '__main__':
     sig_track = np.expand_dims(sig_tracks[event_nb], axis=0)
     infered_sig = model.predict_on_batch(np.array([event,]))[0]
 
+    # Find 3D coordinates
     xs, ys, zs = np.where(sig_track[0,:,:,:] > 0.0)
     sig_cord = np.stack((xs, ys, zs), axis=-1)
     p0 = len(sig_cord)
@@ -81,6 +89,7 @@ if __name__ == '__main__':
     sig_cord = remove_intersect(sig_cord, infer_sig_cord)
     infer_cord = remove_intersect(infer_cord, infer_sig_cord)
 
+    # Calculate F-Score
     precision = p2 / p1
     recall = p2 / p0
     f = (2 * (precision*recall)) / (precision + recall)

@@ -1,8 +1,11 @@
 '''
 train_model.py
-Updated: 3/16/17
+Updated: 4/16/17
 
-This script is used to train CNNs on toy 3D particle track data.
+This script is used to train 3D CNNs on toy 3D particle track data. Data for training
+is generated using the variables under Data Parameters. Training variables including
+number of epochs, batch size, training set size, and model definiton are found under
+Network Parameters.
 
 '''
 import sys; sys.path.insert(0, '../')
@@ -24,9 +27,9 @@ seed = 1234
 # Network Parameters
 epochs = 20
 batch_size = 10
-model = unet_model_3d((1,20,20,20))
-model_folder = '../../models/u_net_3d_v2'
-train_set = 24000
+model = unet_model_3d((1,20,20,20)) # Keras Model definition
+model_folder = '../../models/u_net_3d_v2' # Directory used to store weights and results
+train_set = 24000 # How many examples to use as training set. Leftovers are used for validation.
 
 ################################################################################
 
@@ -45,6 +48,7 @@ if __name__ == '__main__':
     best_val_loss = None
     for j in range(epochs):
 
+        # Training Round
         train_status = []
         batch_x = []
         batch_y = []
@@ -70,6 +74,7 @@ if __name__ == '__main__':
         print('Train Loss ->',train_loss)
         print('Train Accuracy ->',train_acc,'\n')
 
+        # Validation Round
         val_status = []
         batch_x = []
         batch_y = []

@@ -2,6 +2,14 @@
 u_net_3d.py
 
 This script defines the U_net model for keras training. This scripted was sources
+from the 3DUnetCNN project at https://github.com/ellisdg/3DUnetCNN. Some minor
+modifications where done to the original source code. These include:
+
+- Hard coding the number of feature maps per convolutional layer to 64
+
+To create model:
+    from networks.u_net_3d import unet_model_3d
+    model = unet_model_3d(input_shape, depth)
 
 '''
 from functools import partial

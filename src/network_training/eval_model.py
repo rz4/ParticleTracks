@@ -15,16 +15,16 @@ from networks.u_net_3d import unet_model_3d
 # Data Parameters
 shape = (2000,20,20,20)
 num_seed_layers = 4
-avg_bkg_tracks = 0
+avg_bkg_tracks = 10
 noise_prob = 0.01
-seed = 1234
+seed = 9876
 
 # Network Parameters
 epochs = 10
 batch_size = 10
 model = unet_model_3d((1,20,20,20))
-model_folder = '../../models/u_net_3d/'
-threshold = 0.1
+model_folder = '../../models/u_net_3d_v2/'
+threshold = 0.5
 
 ################################################################################
 
